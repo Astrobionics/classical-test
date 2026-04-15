@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Тест по классической живописи</title>
+  <title>Классическая живопись</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <style>
     body {
@@ -15,7 +15,7 @@
     }
 
     .answer-btn:hover:not(:disabled) {
-      transform: translateY(-2px);
+      transform: translateY(-1px);
     }
 
     img {
@@ -25,103 +25,102 @@
   </style>
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen">
-  <div class="max-w-5xl mx-auto px-4 py-8">
-    <header class="text-center mb-8">
-      <div class="flex justify-center mb-4">
-        <a href="/" class="bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl px-5 py-3 text-sm">
+  <div class="max-w-4xl mx-auto px-2 py-3 md:px-3 md:py-4">
+    <header class="text-center mb-3 md:mb-4">
+      <div class="flex justify-center mb-2">
+        <a href="/" class="bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-xl px-3 py-1.5 text-sm">
           ← К выбору раздела
         </a>
       </div>
 
-      <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-3">Тест по классической живописи</h1>
-      <p class="text-zinc-400 text-lg">Посмотри на картину и выбери правильный вариант</p>
+      <h1 class="text-2xl md:text-4xl font-bold tracking-tight">Классическая живопись</h1>
     </header>
 
-    <main class="bg-zinc-900 border border-zinc-800 rounded-3xl shadow-2xl p-5 md:p-8">
+    <main class="bg-zinc-900 border border-zinc-800 rounded-3xl shadow-2xl p-3 md:p-4">
       <section id="startScreen">
         <div class="max-w-2xl mx-auto">
-          <h2 class="text-2xl font-semibold mb-4 text-center">Выбор сложности</h2>
-          <p class="text-zinc-400 text-center mb-8">
+          <h2 class="text-xl font-semibold mb-3 text-center">Выбор сложности</h2>
+          <p class="text-zinc-400 text-center mb-4 text-sm md:text-base">
             В каждом тесте 10 вопросов. Если доступных картин меньше 10, повторы допустимы.
           </p>
 
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-            <button class="difficulty-btn bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl p-5 text-left" data-difficulty="easy">
-              <div class="text-xl font-semibold mb-2">Лёгкий</div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+            <button class="difficulty-btn bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl p-3 text-left" data-difficulty="easy">
+              <div class="text-lg font-semibold mb-1">Лёгкий</div>
               <div class="text-sm text-zinc-400">Вопросы только из easy. Неверные варианты — из всех банков.</div>
             </button>
 
-            <button class="difficulty-btn bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl p-5 text-left" data-difficulty="medium">
-              <div class="text-xl font-semibold mb-2">Средний</div>
+            <button class="difficulty-btn bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl p-3 text-left" data-difficulty="medium">
+              <div class="text-lg font-semibold mb-1">Средний</div>
               <div class="text-sm text-zinc-400">Вопросы из easy + medium.</div>
             </button>
 
-            <button class="difficulty-btn bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl p-5 text-left" data-difficulty="hard">
-              <div class="text-xl font-semibold mb-2">Сложный</div>
+            <button class="difficulty-btn bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl p-3 text-left" data-difficulty="hard">
+              <div class="text-lg font-semibold mb-1">Сложный</div>
               <div class="text-sm text-zinc-400">Вопросы из medium + hard.</div>
             </button>
           </div>
 
-          <div id="startError" class="hidden bg-red-950 border border-red-800 text-red-200 rounded-2xl p-4 text-sm"></div>
+          <div id="startError" class="hidden bg-red-950 border border-red-800 text-red-200 rounded-2xl p-3 text-sm"></div>
         </div>
       </section>
 
       <section id="quizScreen" class="hidden">
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-6">
-          <div class="flex flex-wrap items-center gap-3 text-sm">
-            <div class="bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-3">
+          <div class="flex flex-wrap items-center gap-2 text-sm">
+            <div class="bg-zinc-800 border border-zinc-700 rounded-xl px-3 py-1.5">
               Вопрос: <span id="questionNumber" class="font-semibold">1</span> / 10
             </div>
-            <div class="bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2">
+            <div class="bg-zinc-800 border border-zinc-700 rounded-xl px-3 py-1.5">
               Правильно: <span id="score" class="font-semibold text-emerald-400">0</span>
             </div>
-            <div class="bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2">
+            <div class="bg-zinc-800 border border-zinc-700 rounded-xl px-3 py-1.5">
               Сложность: <span id="difficultyLabel" class="font-semibold">Лёгкий</span>
             </div>
           </div>
 
-          <div class="w-full md:w-64">
+          <div class="w-full md:w-48">
             <div class="h-2 bg-zinc-800 rounded-full overflow-hidden">
               <div id="progressBar" class="h-full bg-violet-500 w-[10%] transition-all duration-300"></div>
             </div>
           </div>
         </div>
 
-        <div class="bg-zinc-800 border border-zinc-700 rounded-3xl p-4 md:p-6 mb-6">
+        <div class="bg-zinc-800 border border-zinc-700 rounded-3xl p-2 md:p-3 mb-3">
           <div class="w-full flex justify-center">
             <img
               id="paintingImage"
               src=""
               alt="Картина"
-              class="max-h-[65vh] w-auto max-w-full rounded-2xl border border-zinc-700 object-contain bg-zinc-900"
+              class="max-h-[36vh] md:max-h-[42vh] w-auto max-w-full rounded-2xl border border-zinc-700 object-contain bg-zinc-900"
             >
           </div>
 
-          <div class="mt-4 flex flex-wrap gap-3">
-            <button id="nextBtn" class="hidden bg-zinc-700 hover:bg-zinc-600 text-white px-5 py-3 rounded-2xl font-medium">
+          <div class="mt-2 flex flex-wrap gap-2">
+            <button id="nextBtn" class="hidden bg-zinc-700 hover:bg-zinc-600 text-white px-4 py-2.5 rounded-2xl font-medium text-sm md:text-base">
               Следующий вопрос
             </button>
           </div>
         </div>
 
-        <div id="answersContainer" class="grid grid-cols-1 gap-4 mb-6"></div>
-        <div id="feedbackBox" class="hidden rounded-2xl border p-4"></div>
+        <div id="answersContainer" class="grid grid-cols-1 gap-2 mb-3"></div>
+        <div id="feedbackBox" class="hidden rounded-2xl border p-3 text-sm md:text-base"></div>
       </section>
 
       <section id="resultScreen" class="hidden">
         <div class="max-w-2xl mx-auto text-center">
-          <h2 class="text-3xl font-bold mb-4">Тест завершён</h2>
-          <p class="text-xl text-zinc-300 mb-3">
+          <h2 class="text-2xl md:text-3xl font-bold mb-3">Тест завершён</h2>
+          <p class="text-lg text-zinc-300 mb-2">
             Результат: <span id="finalScore" class="font-bold text-emerald-400">0</span> / 10
           </p>
-          <p id="finalComment" class="text-zinc-400 mb-8"></p>
+          <p id="finalComment" class="text-zinc-400 mb-5 text-sm md:text-base"></p>
 
-          <div class="flex flex-col md:flex-row gap-4 justify-center">
-            <button id="restartSameBtn" class="bg-violet-600 hover:bg-violet-500 text-white px-6 py-3 rounded-2xl font-medium">
+          <div class="flex flex-col md:flex-row gap-3 justify-center">
+            <button id="restartSameBtn" class="bg-violet-600 hover:bg-violet-500 text-white px-5 py-2.5 rounded-2xl font-medium">
               Пройти ещё раз
             </button>
 
-            <a href="/" class="bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-white px-6 py-3 rounded-2xl font-medium">
+            <a href="/" class="bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-white px-5 py-2.5 rounded-2xl font-medium">
               К выбору раздела
             </a>
           </div>
@@ -177,11 +176,6 @@
       return array[Math.floor(Math.random() * array.length)];
     }
 
-    function formatItemLabel(filePath) {
-      const fileName = filePath.split("/").pop().replace(/\.[^/.]+$/, "");
-      return fileName.replace(/=/g, '"');
-    }
-
     function getQuestionPool(difficulty) {
       if (difficulty === "easy") return [...ITEM_BANKS.easy];
       if (difficulty === "medium") return [...ITEM_BANKS.easy, ...ITEM_BANKS.medium];
@@ -215,9 +209,9 @@
       feedbackBox.textContent = text;
 
       if (type === "correct") {
-        feedbackBox.className = "rounded-2xl border p-4 bg-emerald-950 border-emerald-700 text-emerald-200";
+        feedbackBox.className = "rounded-2xl border p-3 text-sm md:text-base bg-emerald-950 border-emerald-700 text-emerald-200";
       } else {
-        feedbackBox.className = "rounded-2xl border p-4 bg-red-950 border-red-700 text-red-200";
+        feedbackBox.className = "rounded-2xl border p-3 text-sm md:text-base bg-red-950 border-red-700 text-red-200";
       }
     }
 
@@ -247,25 +241,49 @@
 
     function createQuestion(correctItem) {
       const wrongPool = getWrongPool(currentDifficulty);
-      const correctLabel = formatItemLabel(correctItem);
 
-      const uniqueWrongLabels = [...new Set(
-        wrongPool
-          .filter(item => item !== correctItem)
-          .map(item => formatItemLabel(item))
-          .filter(label => label !== correctLabel)
-      )];
+      const wrongAnswers = [];
+      const usedAuthorKeys = new Set([correctItem.authorKey]);
 
-      if (uniqueWrongLabels.length < 2) {
-        throw new Error("Для выбранной сложности нужно хотя бы 3 разных изображения.");
+      const shuffledPool = shuffle(
+        wrongPool.filter(item => item.file !== correctItem.file)
+      );
+
+      for (const item of shuffledPool) {
+        if (usedAuthorKeys.has(item.authorKey)) {
+          continue;
+        }
+
+        usedAuthorKeys.add(item.authorKey);
+        wrongAnswers.push({
+          author: item.author,
+          authorKey: item.authorKey,
+          isCorrect: false
+        });
+
+        if (wrongAnswers.length === 2) {
+          break;
+        }
       }
 
-      const wrongOptions = shuffle(uniqueWrongLabels).slice(0, 2);
-      const answers = shuffle([correctLabel, ...wrongOptions]);
+      if (wrongAnswers.length < 2) {
+        throw new Error("Для выбранной сложности нужно минимум 3 разных автора.");
+      }
+
+      const answers = shuffle([
+        {
+          author: correctItem.author,
+          authorKey: correctItem.authorKey,
+          isCorrect: true
+        },
+        ...wrongAnswers
+      ]);
 
       return {
-        image: correctItem,
-        correctAnswer: correctLabel,
+        image: correctItem.file,
+        correctAuthor: correctItem.author,
+        correctAuthorKey: correctItem.authorKey,
+        correctFullLabel: correctItem.displayFull,
         answers
       };
     }
@@ -273,12 +291,13 @@
     function renderAnswers(question) {
       answersContainer.innerHTML = "";
 
-      question.answers.forEach(answerText => {
+      question.answers.forEach(answer => {
         const button = document.createElement("button");
         button.type = "button";
-        button.textContent = answerText;
-        button.className = "answer-btn w-full text-left bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl px-5 py-4 text-base md:text-lg";
-        button.addEventListener("click", () => handleAnswerClick(answerText));
+        button.textContent = answer.author;
+        button.dataset.authorKey = answer.authorKey;
+        button.className = "answer-btn w-full text-left bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl px-3 py-2.5 text-sm md:text-base";
+        button.addEventListener("click", () => handleAnswerClick(answer));
         answersContainer.appendChild(button);
       });
     }
@@ -291,14 +310,14 @@
 
     function highlightAnswers(selectedAnswer) {
       answersContainer.querySelectorAll("button").forEach(button => {
-        const text = button.textContent;
+        const authorKey = button.dataset.authorKey;
 
-        if (text === currentQuestion.correctAnswer) {
-          button.className = "answer-btn w-full text-left bg-emerald-950 border border-emerald-600 rounded-2xl px-5 py-4 text-base md:text-lg";
-        } else if (text === selectedAnswer) {
-          button.className = "answer-btn w-full text-left bg-red-950 border border-red-600 rounded-2xl px-5 py-4 text-base md:text-lg";
+        if (authorKey === currentQuestion.correctAuthorKey) {
+          button.className = "answer-btn w-full text-left bg-emerald-950 border border-emerald-600 rounded-2xl px-3 py-2.5 text-sm md:text-base";
+        } else if (authorKey === selectedAnswer.authorKey) {
+          button.className = "answer-btn w-full text-left bg-red-950 border border-red-600 rounded-2xl px-3 py-2.5 text-sm md:text-base";
         } else {
-          button.className = "answer-btn w-full text-left bg-zinc-800 border border-zinc-700 rounded-2xl px-5 py-4 text-base md:text-lg opacity-70";
+          button.className = "answer-btn w-full text-left bg-zinc-800 border border-zinc-700 rounded-2xl px-3 py-2.5 text-sm md:text-base opacity-70";
         }
       });
     }
@@ -313,7 +332,8 @@
       currentQuestion = createQuestion(correctItem);
 
       paintingImage.src = "/" + currentQuestion.image;
-      paintingImage.alt = "Картина";
+      paintingImage.alt = currentQuestion.correctFullLabel;
+
       renderAnswers(currentQuestion);
     }
 
@@ -332,9 +352,9 @@
           throw new Error("В этой сложности пока нет изображений.");
         }
 
-        const uniqueLabels = new Set(wrongPool.map(formatItemLabel));
-        if (uniqueLabels.size < 3) {
-          throw new Error("Для запуска теста нужно минимум 3 разных изображения.");
+        const uniqueAuthors = new Set(wrongPool.map(item => item.authorKey));
+        if (uniqueAuthors.size < 3) {
+          throw new Error("Для запуска теста нужно минимум 3 разных автора.");
         }
 
         preparedQuestions = buildTestSequence(questionPool, TEST_LENGTH);
@@ -353,12 +373,12 @@
       disableAnswers();
       highlightAnswers(selectedAnswer);
 
-      if (selectedAnswer === currentQuestion.correctAnswer) {
+      if (selectedAnswer.authorKey === currentQuestion.correctAuthorKey) {
         score += 1;
         scoreEl.textContent = String(score);
-        setFeedback("correct", "Верно.");
+        setFeedback("correct", `Верно. ${currentQuestion.correctFullLabel}`);
       } else {
-        setFeedback("wrong", `Неверно. Правильный ответ: ${currentQuestion.correctAnswer}`);
+        setFeedback("wrong", `Неверно. Правильный ответ: ${currentQuestion.correctFullLabel}`);
       }
 
       nextBtn.classList.remove("hidden");

@@ -12,6 +12,37 @@ function normalizeForWeb(filePath) {
   return filePath.split(path.sep).join("/");
 }
 
+function normalizeAuthor(author) {
+  return author.trim().replace(/\s+/g, " ").toLowerCase();
+}
+
+function parseArtFileName(filePath) {
+  const fileName = path.basename(filePath, path.extname(filePath));
+  const parts = fileName.split("=");
+
+  if (parts.length < 3) {
+    throw new Error(
+      `Неверный формат имени файла: "${fileName}". Ожидается формат: Автор =Картина=`
+    );
+  }
+
+  const author = parts[0].trim();
+  const title = parts.slice(1, -1).join("=").trim();
+
+  if (!author || !title) {
+    throw new Error(
+      `Не удалось извлечь автора или название из файла: "${fileName}"`
+    );
+  }
+
+  return {
+    author,
+    title,
+    authorKey: normalizeAuthor(author),
+    displayFull: `${author} "${title}"`,
+  };
+}
+
 function getFiles(bankName) {
   const bankDir = path.join(IMAGE_ROOT, bankName);
   if (!fs.existsSync(bankDir)) return [];
@@ -21,7 +52,18 @@ function getFiles(bankName) {
     .map(entry => entry.name)
     .filter(fileName => ALLOWED_EXTENSIONS.has(path.extname(fileName).toLowerCase()))
     .sort((a, b) => a.localeCompare(b, "ru"))
-    .map(fileName => normalizeForWeb(path.join("images", bankName, fileName)));
+    .map(fileName => {
+      const relativePath = normalizeForWeb(path.join("images", bankName, fileName));
+      const parsed = parseArtFileName(fileName);
+
+      return {
+        file: relativePath,
+        author: parsed.author,
+        title: parsed.title,
+        authorKey: parsed.authorKey,
+        displayFull: parsed.displayFull,
+      };
+    });
 }
 
 const result = {};
