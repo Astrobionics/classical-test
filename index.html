@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тесты по классическому искусству</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style>
+    body {
+      font-family: Inter, system-ui, sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-zinc-950 text-zinc-100 min-h-screen flex items-center justify-center px-4">
+  <main class="max-w-4xl w-full">
+    <div class="text-center mb-10">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4">Тесты по классическому искусству</h1>
+      <p class="text-zinc-400 text-lg">Выбери раздел</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <a href="/music" class="block bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-3xl p-8 shadow-2xl">
+        <h2 class="text-2xl font-semibold mb-3">Классическая музыка</h2>
+        <p class="text-zinc-400">Слушай отрывок и угадывай произведение.</p>
+      </a>
+
+      <a href="/art" class="block bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-3xl p-8 shadow-2xl">
+        <h2 class="text-2xl font-semibold mb-3">Классическая живопись</h2>
+        <p class="text-zinc-400">Смотри на картину и выбирай правильный вариант.</p>
+      </a>
+    </div>
+  </main>
+</body>
+</html>

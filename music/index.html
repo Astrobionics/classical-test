@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тест по классической музыке</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style>
+    body {
+      font-family: Inter, system-ui, sans-serif;
+    }
+
+    .answer-btn {
+      transition: transform 0.18s ease, background-color 0.18s ease, border-color 0.18s ease;
+    }
+
+    .answer-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body class="bg-zinc-950 text-zinc-100 min-h-screen">
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <header class="text-center mb-8">
+      <div class="flex justify-center mb-4">
+        <a href="/" class="bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl px-5 py-3 text-sm">
+          ← К выбору раздела
+        </a>
+      </div>
+
+      <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-3">Тест по классической музыке</h1>
+      <p class="text-zinc-400 text-lg">Прослушай отрывок и выбери правильный вариант</p>
+    </header>
+
+    <main class="bg-zinc-900 border border-zinc-800 rounded-3xl shadow-2xl p-5 md:p-8">
+      <section id="startScreen">
+        <div class="max-w-2xl mx-auto">
+          <h2 class="text-2xl font-semibold mb-4 text-center">Выбор сложности</h2>
+          <p class="text-zinc-400 text-center mb-8">
+            В каждом тесте 10 вопросов. Если доступных треков меньше 10, повторы допустимы.
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <button class="difficulty-btn bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl p-5 text-left" data-difficulty="easy">
+              <div class="text-xl font-semibold mb-2">Лёгкий</div>
+              <div class="text-sm text-zinc-400">Вопросы только из easy. Неверные варианты — из всех банков.</div>
+            </button>
+
+            <button class="difficulty-btn bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl p-5 text-left" data-difficulty="medium">
+              <div class="text-xl font-semibold mb-2">Средний</div>
+              <div class="text-sm text-zinc-400">Вопросы из easy + medium.</div>
+            </button>
+
+            <button class="difficulty-btn bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl p-5 text-left" data-difficulty="hard">
+              <div class="text-xl font-semibold mb-2">Сложный</div>
+              <div class="text-sm text-zinc-400">Вопросы из medium + hard.</div>
+            </button>
+          </div>
+
+          <div id="startError" class="hidden bg-red-950 border border-red-800 text-red-200 rounded-2xl p-4 text-sm"></div>
+        </div>
+      </section>
+
+      <section id="quizScreen" class="hidden">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-6">
+          <div class="flex flex-wrap items-center gap-3 text-sm">
+            <div class="bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2">
+              Вопрос: <span id="questionNumber" class="font-semibold">1</span> / 10
+            </div>
+            <div class="bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2">
+              Правильно: <span id="score" class="font-semibold text-emerald-400">0</span>
+            </div>
+            <div class="bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2">
+              Сложность: <span id="difficultyLabel" class="font-semibold">Лёгкий</span>
+            </div>
+          </div>
+
+          <div class="w-full md:w-64">
+            <div class="h-2 bg-zinc-800 rounded-full overflow-hidden">
+              <div id="progressBar" class="h-full bg-violet-500 w-[10%] transition-all duration-300"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-zinc-800 border border-zinc-700 rounded-3xl p-5 md:p-6 mb-6">
+          <audio id="audioPlayer" class="w-full" controls></audio>
+
+          <div class="mt-4 flex flex-wrap gap-3">
+            <button id="playAgainBtn" class="bg-violet-600 hover:bg-violet-500 text-white px-5 py-3 rounded-2xl font-medium">
+              Слушать ещё раз
+            </button>
+
+            <button id="nextBtn" class="hidden bg-zinc-700 hover:bg-zinc-600 text-white px-5 py-3 rounded-2xl font-medium">
+              Следующий вопрос
+            </button>
+          </div>
+        </div>
+
+        <div id="answersContainer" class="grid grid-cols-1 gap-4 mb-6"></div>
+        <div id="feedbackBox" class="hidden rounded-2xl border p-4"></div>
+      </section>
+
+      <section id="resultScreen" class="hidden">
+        <div class="max-w-2xl mx-auto text-center">
+          <h2 class="text-3xl font-bold mb-4">Тест завершён</h2>
+          <p class="text-xl text-zinc-300 mb-3">
+            Результат: <span id="finalScore" class="font-bold text-emerald-400">0</span> / 10
+          </p>
+          <p id="finalComment" class="text-zinc-400 mb-8"></p>
+
+          <div class="flex flex-col md:flex-row gap-4 justify-center">
+            <button id="restartSameBtn" class="bg-violet-600 hover:bg-violet-500 text-white px-6 py-3 rounded-2xl font-medium">
+              Пройти ещё раз
+            </button>
+
+            <a href="/" class="bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-white px-6 py-3 rounded-2xl font-medium">
+              К выбору раздела
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/data/music-tracks.js"></script>
+  <script>
+    const TEST_LENGTH = 10;
+
+    const startScreen = document.getElementById("startScreen");
+    const quizScreen = document.getElementById("quizScreen");
+    const resultScreen = document.getElementById("resultScreen");
+    const startError = document.getElementById("startError");
+
+    const questionNumberEl = document.getElementById("questionNumber");
+    const scoreEl = document.getElementById("score");
+    const difficultyLabelEl = document.getElementById("difficultyLabel");
+    const progressBarEl = document.getElementById("progressBar");
+
+    const audioPlayer = document.getElementById("audioPlayer");
+    const playAgainBtn = document.getElementById("playAgainBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const answersContainer = document.getElementById("answersContainer");
+    const feedbackBox = document.getElementById("feedbackBox");
+
+    const finalScoreEl = document.getElementById("finalScore");
+    const finalCommentEl = document.getElementById("finalComment");
+    const restartSameBtn = document.getElementById("restartSameBtn");
+
+    const difficultyButtons = document.querySelectorAll(".difficulty-btn");
+
+    const TRACK_BANKS = window.MUSIC_TRACK_BANKS || { easy: [], medium: [], hard: [] };
+
+    let currentDifficulty = null;
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let currentQuestion = null;
+    let awaitingNext = false;
+    let preparedQuestions = [];
+
+    function shuffle(array) {
+      const copy = [...array];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function sampleOne(array) {
+      return array[Math.floor(Math.random() * array.length)];
+    }
+
+    function formatTrackLabel(filePath) {
+      const fileName = filePath.split("/").pop().replace(/\.[^/.]+$/, "");
+      return fileName.replace(/=/g, '"');
+    }
+
+    function getQuestionPool(difficulty) {
+      if (difficulty === "easy") return [...TRACK_BANKS.easy];
+      if (difficulty === "medium") return [...TRACK_BANKS.easy, ...TRACK_BANKS.medium];
+      if (difficulty === "hard") return [...TRACK_BANKS.medium, ...TRACK_BANKS.hard];
+      return [];
+    }
+
+    function getWrongPool(difficulty) {
+      if (difficulty === "easy") return [...TRACK_BANKS.easy, ...TRACK_BANKS.medium, ...TRACK_BANKS.hard];
+      if (difficulty === "medium") return [...TRACK_BANKS.easy, ...TRACK_BANKS.medium];
+      if (difficulty === "hard") return [...TRACK_BANKS.medium, ...TRACK_BANKS.hard];
+      return [];
+    }
+
+    function getDifficultyLabel(difficulty) {
+      if (difficulty === "easy") return "Лёгкий";
+      if (difficulty === "medium") return "Средний";
+      if (difficulty === "hard") return "Сложный";
+      return "";
+    }
+
+    function showScreen(screen) {
+      startScreen.classList.add("hidden");
+      quizScreen.classList.add("hidden");
+      resultScreen.classList.add("hidden");
+      screen.classList.remove("hidden");
+    }
+
+    function setFeedback(type, text) {
+      feedbackBox.classList.remove("hidden");
+      feedbackBox.textContent = text;
+
+      if (type === "correct") {
+        feedbackBox.className = "rounded-2xl border p-4 bg-emerald-950 border-emerald-700 text-emerald-200";
+      } else {
+        feedbackBox.className = "rounded-2xl border p-4 bg-red-950 border-red-700 text-red-200";
+      }
+    }
+
+    function hideFeedback() {
+      feedbackBox.classList.add("hidden");
+      feedbackBox.textContent = "";
+    }
+
+    function updateHeader() {
+      questionNumberEl.textContent = String(currentQuestionIndex + 1);
+      scoreEl.textContent = String(score);
+      difficultyLabelEl.textContent = getDifficultyLabel(currentDifficulty);
+      progressBarEl.style.width = (((currentQuestionIndex + 1) / TEST_LENGTH) * 100) + "%";
+    }
+
+    function buildTestSequence(pool, length) {
+      if (pool.length >= length) {
+        return shuffle(pool).slice(0, length);
+      }
+
+      const result = shuffle(pool);
+      while (result.length < length) {
+        result.push(sampleOne(pool));
+      }
+      return result;
+    }
+
+    function createQuestion(correctTrack) {
+      const wrongPool = getWrongPool(currentDifficulty);
+      const correctLabel = formatTrackLabel(correctTrack);
+
+      const uniqueWrongLabels = [...new Set(
+        wrongPool
+          .filter(track => track !== correctTrack)
+          .map(track => formatTrackLabel(track))
+          .filter(label => label !== correctLabel)
+      )];
+
+      if (uniqueWrongLabels.length < 2) {
+        throw new Error("Для выбранной сложности нужно хотя бы 3 разных трека.");
+      }
+
+      const wrongOptions = shuffle(uniqueWrongLabels).slice(0, 2);
+      const answers = shuffle([correctLabel, ...wrongOptions]);
+
+      return {
+        audio: correctTrack,
+        correctAnswer: correctLabel,
+        answers
+      };
+    }
+
+    function renderAnswers(question) {
+      answersContainer.innerHTML = "";
+
+      question.answers.forEach(answerText => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.textContent = answerText;
+        button.className = "answer-btn w-full text-left bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl px-5 py-4 text-base md:text-lg";
+        button.addEventListener("click", () => handleAnswerClick(answerText));
+        answersContainer.appendChild(button);
+      });
+    }
+
+    function disableAnswers() {
+      answersContainer.querySelectorAll("button").forEach(button => {
+        button.disabled = true;
+      });
+    }
+
+    function highlightAnswers(selectedAnswer) {
+      answersContainer.querySelectorAll("button").forEach(button => {
+        const text = button.textContent;
+
+        if (text === currentQuestion.correctAnswer) {
+          button.className = "answer-btn w-full text-left bg-emerald-950 border border-emerald-600 rounded-2xl px-5 py-4 text-base md:text-lg";
+        } else if (text === selectedAnswer) {
+          button.className = "answer-btn w-full text-left bg-red-950 border border-red-600 rounded-2xl px-5 py-4 text-base md:text-lg";
+        } else {
+          button.className = "answer-btn w-full text-left bg-zinc-800 border border-zinc-700 rounded-2xl px-5 py-4 text-base md:text-lg opacity-70";
+        }
+      });
+    }
+
+    function loadQuestion() {
+      awaitingNext = false;
+      nextBtn.classList.add("hidden");
+      hideFeedback();
+      updateHeader();
+
+      const correctTrack = preparedQuestions[currentQuestionIndex];
+      currentQuestion = createQuestion(correctTrack);
+
+      audioPlayer.src = "/" + currentQuestion.audio;
+      audioPlayer.load();
+
+      renderAnswers(currentQuestion);
+    }
+
+    function startTest(difficulty) {
+      currentDifficulty = difficulty;
+      currentQuestionIndex = 0;
+      score = 0;
+      startError.classList.add("hidden");
+      startError.textContent = "";
+
+      try {
+        const questionPool = getQuestionPool(difficulty);
+        const wrongPool = getWrongPool(difficulty);
+
+        if (questionPool.length === 0) {
+          throw new Error("В этой сложности пока нет треков.");
+        }
+
+        const uniqueLabels = new Set(wrongPool.map(formatTrackLabel));
+        if (uniqueLabels.size < 3) {
+          throw new Error("Для запуска теста нужно минимум 3 разных трека.");
+        }
+
+        preparedQuestions = buildTestSequence(questionPool, TEST_LENGTH);
+        showScreen(quizScreen);
+        loadQuestion();
+      } catch (error) {
+        startError.textContent = error.message;
+        startError.classList.remove("hidden");
+      }
+    }
+
+    function handleAnswerClick(selectedAnswer) {
+      if (awaitingNext) return;
+
+      awaitingNext = true;
+      disableAnswers();
+      highlightAnswers(selectedAnswer);
+
+      if (selectedAnswer === currentQuestion.correctAnswer) {
+        score += 1;
+        scoreEl.textContent = String(score);
+        setFeedback("correct", "Верно.");
+      } else {
+        setFeedback("wrong", `Неверно. Правильный ответ: ${currentQuestion.correctAnswer}`);
+      }
+
+      nextBtn.classList.remove("hidden");
+    }
+
+    function finishTest() {
+      finalScoreEl.textContent = String(score);
+
+      if (score === 10) {
+        finalCommentEl.textContent = "Идеально. Все ответы верные.";
+      } else if (score >= 8) {
+        finalCommentEl.textContent = "Очень сильный результат.";
+      } else if (score >= 5) {
+        finalCommentEl.textContent = "Неплохо. Уже есть база.";
+      } else {
+        finalCommentEl.textContent = "Можно пройти ещё раз и улучшить результат.";
+      }
+
+      showScreen(resultScreen);
+    }
+
+    function goToNextQuestion() {
+      audioPlayer.pause();
+
+      if (currentQuestionIndex >= TEST_LENGTH - 1) {
+        finishTest();
+        return;
+      }
+
+      currentQuestionIndex += 1;
+      loadQuestion();
+    }
+
+    difficultyButtons.forEach(button => {
+      button.addEventListener("click", () => startTest(button.dataset.difficulty));
+    });
+
+    playAgainBtn.addEventListener("click", () => {
+      audioPlayer.currentTime = 0;
+      audioPlayer.play();
+    });
+
+    nextBtn.addEventListener("click", goToNextQuestion);
+    restartSameBtn.addEventListener("click", () => startTest(currentDifficulty));
+  </script>
+</body>
+</html>
