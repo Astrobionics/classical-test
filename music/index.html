@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Тест по классической музыке</title>
+  <title>Классическая музыка</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <style>
     body {
@@ -15,21 +15,34 @@
     }
 
     .answer-btn:hover:not(:disabled) {
-      transform: translateY(-2px);
+      transform: translateY(-1px);
+    }
+
+    .hero-bg {
+      background-image:
+        linear-gradient(to bottom, rgba(9, 9, 11, 0.45), rgba(9, 9, 11, 0.78)),
+        url("../service/HeaderMusic.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
     }
   </style>
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen">
-  <div class="max-w-4xl mx-auto px-4 py-8">
-    <header class="text-center mb-8">
+  <div class="max-w-4xl mx-auto px-4 py-6">
+    <header class="text-center mb-6">
       <div class="flex justify-center mb-4">
-        <a href="/" class="bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl px-5 py-3 text-sm">
+        <a href="../" class="bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl px-5 py-3 text-sm">
           ← К выбору раздела
         </a>
       </div>
 
-      <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-3">Тест по классической музыке</h1>
-      <p class="text-zinc-400 text-lg">Прослушай отрывок и выбери правильный вариант</p>
+      <div class="hero-bg rounded-3xl border border-zinc-800 shadow-2xl overflow-hidden">
+        <div class="px-5 py-10 md:px-8 md:py-12">
+          <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-2">Классическая музыка</h1>
+          <p class="text-zinc-200/90 text-base md:text-lg">Прослушай отрывок и выбери правильный вариант</p>
+        </div>
+      </div>
     </header>
 
     <main class="bg-zinc-900 border border-zinc-800 rounded-3xl shadow-2xl p-5 md:p-8">
@@ -62,42 +75,42 @@
       </section>
 
       <section id="quizScreen" class="hidden">
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-6">
-          <div class="flex flex-wrap items-center gap-3 text-sm">
-            <div class="bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-4">
+          <div class="flex flex-wrap items-center gap-2 text-sm">
+            <div class="bg-zinc-800 border border-zinc-700 rounded-xl px-3 py-1.5">
               Вопрос: <span id="questionNumber" class="font-semibold">1</span> / 10
             </div>
-            <div class="bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2">
+            <div class="bg-zinc-800 border border-zinc-700 rounded-xl px-3 py-1.5">
               Правильно: <span id="score" class="font-semibold text-emerald-400">0</span>
             </div>
-            <div class="bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2">
+            <div class="bg-zinc-800 border border-zinc-700 rounded-xl px-3 py-1.5">
               Сложность: <span id="difficultyLabel" class="font-semibold">Лёгкий</span>
             </div>
           </div>
 
-          <div class="w-full md:w-64">
+          <div class="w-full md:w-56">
             <div class="h-2 bg-zinc-800 rounded-full overflow-hidden">
               <div id="progressBar" class="h-full bg-violet-500 w-[10%] transition-all duration-300"></div>
             </div>
           </div>
         </div>
 
-        <div class="bg-zinc-800 border border-zinc-700 rounded-3xl p-5 md:p-6 mb-6">
+        <div class="bg-zinc-800 border border-zinc-700 rounded-3xl p-4 md:p-5 mb-4">
           <audio id="audioPlayer" class="w-full" controls></audio>
 
-          <div class="mt-4 flex flex-wrap gap-3">
-            <button id="playAgainBtn" class="bg-violet-600 hover:bg-violet-500 text-white px-5 py-3 rounded-2xl font-medium">
+          <div class="mt-3 flex flex-wrap gap-2">
+            <button id="playAgainBtn" class="bg-violet-600 hover:bg-violet-500 text-white px-4 py-2.5 rounded-2xl font-medium text-sm md:text-base">
               Слушать ещё раз
             </button>
 
-            <button id="nextBtn" class="hidden bg-zinc-700 hover:bg-zinc-600 text-white px-5 py-3 rounded-2xl font-medium">
+            <button id="nextBtn" class="hidden bg-zinc-700 hover:bg-zinc-600 text-white px-4 py-2.5 rounded-2xl font-medium text-sm md:text-base">
               Следующий вопрос
             </button>
           </div>
         </div>
 
-        <div id="answersContainer" class="grid grid-cols-1 gap-4 mb-6"></div>
-        <div id="feedbackBox" class="hidden rounded-2xl border p-4"></div>
+        <div id="answersContainer" class="grid grid-cols-1 gap-2 mb-4"></div>
+        <div id="feedbackBox" class="hidden rounded-2xl border p-3 text-sm md:text-base"></div>
       </section>
 
       <section id="resultScreen" class="hidden">
@@ -113,7 +126,7 @@
               Пройти ещё раз
             </button>
 
-            <a href="/" class="bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-white px-6 py-3 rounded-2xl font-medium">
+            <a href="../" class="bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-white px-6 py-3 rounded-2xl font-medium">
               К выбору раздела
             </a>
           </div>
@@ -122,7 +135,7 @@
     </main>
   </div>
 
-  <script src="/data/music-tracks.js"></script>
+  <script src="../data/music-tracks.js"></script>
   <script>
     const TEST_LENGTH = 10;
 
@@ -208,9 +221,9 @@
       feedbackBox.textContent = text;
 
       if (type === "correct") {
-        feedbackBox.className = "rounded-2xl border p-4 bg-emerald-950 border-emerald-700 text-emerald-200";
+        feedbackBox.className = "rounded-2xl border p-3 text-sm md:text-base bg-emerald-950 border-emerald-700 text-emerald-200";
       } else {
-        feedbackBox.className = "rounded-2xl border p-4 bg-red-950 border-red-700 text-red-200";
+        feedbackBox.className = "rounded-2xl border p-3 text-sm md:text-base bg-red-950 border-red-700 text-red-200";
       }
     }
 
@@ -270,8 +283,8 @@
         const button = document.createElement("button");
         button.type = "button";
         button.textContent = answerText;
-        button.className = "answer-btn w-full text-left bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl px-5 py-4 text-base md:text-lg";
-        button.addEventListener("click", () => handleAnswerClick(answerText));
+        button.className = "answer-btn w-full text-left bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl px-3 py-2.5 text-sm md:text-base";
+        button.addEventListener("click", () => checkAnswer(answerText));
         answersContainer.appendChild(button);
       });
     }
@@ -287,11 +300,11 @@
         const text = button.textContent;
 
         if (text === currentQuestion.correctAnswer) {
-          button.className = "answer-btn w-full text-left bg-emerald-950 border border-emerald-600 rounded-2xl px-5 py-4 text-base md:text-lg";
+          button.className = "answer-btn w-full text-left bg-emerald-950 border border-emerald-600 rounded-2xl px-3 py-2.5 text-sm md:text-base";
         } else if (text === selectedAnswer) {
-          button.className = "answer-btn w-full text-left bg-red-950 border border-red-600 rounded-2xl px-5 py-4 text-base md:text-lg";
+          button.className = "answer-btn w-full text-left bg-red-950 border border-red-600 rounded-2xl px-3 py-2.5 text-sm md:text-base";
         } else {
-          button.className = "answer-btn w-full text-left bg-zinc-800 border border-zinc-700 rounded-2xl px-5 py-4 text-base md:text-lg opacity-70";
+          button.className = "answer-btn w-full text-left bg-zinc-800 border border-zinc-700 rounded-2xl px-3 py-2.5 text-sm md:text-base opacity-70";
         }
       });
     }
@@ -305,7 +318,7 @@
       const correctTrack = preparedQuestions[currentQuestionIndex];
       currentQuestion = createQuestion(correctTrack);
 
-      audioPlayer.src = "/" + currentQuestion.audio;
+      audioPlayer.src = "../" + currentQuestion.audio;
       audioPlayer.load();
 
       renderAnswers(currentQuestion);
@@ -340,7 +353,7 @@
       }
     }
 
-    function handleAnswerClick(selectedAnswer) {
+    function checkAnswer(selectedAnswer) {
       if (awaitingNext) return;
 
       awaitingNext = true;

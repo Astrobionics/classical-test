@@ -9,26 +9,37 @@
     body {
       font-family: Inter, system-ui, sans-serif;
     }
+
+    .hero-bg {
+      background-image:
+        linear-gradient(to bottom, rgba(9, 9, 11, 0.45), rgba(9, 9, 11, 0.78)),
+        url("./service/HeaderMain.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
   </style>
 </head>
-<body class="bg-zinc-950 text-zinc-100 min-h-screen flex items-center justify-center px-4">
-  <main class="max-w-4xl w-full">
-    <div class="text-center mb-10">
-      <h1 class="text-4xl md:text-5xl font-bold mb-4">Тесты по классическому искусству</h1>
-      <p class="text-zinc-400 text-lg">Выбери раздел</p>
-    </div>
+<body class="bg-zinc-950 text-zinc-100 min-h-screen">
+  <div class="max-w-5xl mx-auto px-3 py-4 md:px-4 md:py-6">
+    <header class="hero-bg rounded-3xl border border-zinc-800 shadow-2xl overflow-hidden mb-5">
+      <div class="px-4 py-10 md:px-8 md:py-14 text-center">
+        <h1 class="text-3xl md:text-5xl font-bold mb-3">Тесты по классическому искусству</h1>
+        <p class="text-zinc-200/90 text-base md:text-lg">Выбери раздел</p>
+      </div>
+    </header>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <a href="/music" class="block bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-3xl p-8 shadow-2xl">
-        <h2 class="text-2xl font-semibold mb-3">Классическая музыка</h2>
+    <main class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <a href="./music/" class="block bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-3xl p-6 shadow-2xl">
+        <h2 class="text-2xl font-semibold mb-2">Классическая музыка</h2>
         <p class="text-zinc-400">Слушай отрывок и угадывай произведение.</p>
       </a>
 
-      <a href="/art" class="block bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-3xl p-8 shadow-2xl">
-        <h2 class="text-2xl font-semibold mb-3">Классическая живопись</h2>
-        <p class="text-zinc-400">Смотри на картину и выбирай правильный вариант.</p>
+      <a href="./art/" class="block bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-3xl p-6 shadow-2xl">
+        <h2 class="text-2xl font-semibold mb-2">Классическая живопись</h2>
+        <p class="text-zinc-400">Смотри на картину и выбирай автора.</p>
       </a>
-    </div>
-  </main>
+    </main>
+  </div>
 </body>
 </html>

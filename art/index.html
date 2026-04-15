@@ -22,41 +22,63 @@
       -webkit-user-drag: none;
       user-select: none;
     }
+
+    .hero-bg {
+      background-image:
+        linear-gradient(to bottom, rgba(9, 9, 11, 0.45), rgba(9, 9, 11, 0.78)),
+        url("../service/HeaderArt.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
   </style>
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen">
   <div class="max-w-4xl mx-auto px-2 py-3 md:px-3 md:py-4">
-    <header class="text-center mb-3 md:mb-4">
-      <div class="flex justify-center mb-2">
-        <a href="/" class="bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-xl px-3 py-1.5 text-sm">
+    <header id="pageHeader" class="text-center mb-4">
+      <div class="flex justify-center mb-3">
+        <a href="../" class="bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl px-5 py-3 text-sm">
           ← К выбору раздела
         </a>
       </div>
 
-      <h1 class="text-2xl md:text-4xl font-bold tracking-tight">Классическая живопись</h1>
+      <div class="hero-bg rounded-3xl border border-zinc-800 shadow-2xl overflow-hidden">
+        <div class="px-5 py-10 md:px-8 md:py-12">
+          <h1 class="text-3xl md:text-5xl font-bold tracking-tight">Классическая живопись</h1>
+        </div>
+      </div>
     </header>
+
+    <div id="compactQuizTitle" class="hidden text-center mb-3">
+      <div class="flex justify-center mb-2">
+        <a href="../" class="bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-xl px-3 py-1.5 text-sm">
+          ← К выбору раздела
+        </a>
+      </div>
+      <h1 class="text-2xl md:text-3xl font-bold tracking-tight">Классическая живопись</h1>
+    </div>
 
     <main class="bg-zinc-900 border border-zinc-800 rounded-3xl shadow-2xl p-3 md:p-4">
       <section id="startScreen">
         <div class="max-w-2xl mx-auto">
-          <h2 class="text-xl font-semibold mb-3 text-center">Выбор сложности</h2>
-          <p class="text-zinc-400 text-center mb-4 text-sm md:text-base">
+          <h2 class="text-2xl font-semibold mb-4 text-center">Выбор сложности</h2>
+          <p class="text-zinc-400 text-center mb-8 text-sm md:text-base">
             В каждом тесте 10 вопросов. Если доступных картин меньше 10, повторы допустимы.
           </p>
 
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
-            <button class="difficulty-btn bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl p-3 text-left" data-difficulty="easy">
-              <div class="text-lg font-semibold mb-1">Лёгкий</div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <button class="difficulty-btn bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl p-5 text-left" data-difficulty="easy">
+              <div class="text-xl font-semibold mb-2">Лёгкий</div>
               <div class="text-sm text-zinc-400">Вопросы только из easy. Неверные варианты — из всех банков.</div>
             </button>
 
-            <button class="difficulty-btn bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl p-3 text-left" data-difficulty="medium">
-              <div class="text-lg font-semibold mb-1">Средний</div>
+            <button class="difficulty-btn bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl p-5 text-left" data-difficulty="medium">
+              <div class="text-xl font-semibold mb-2">Средний</div>
               <div class="text-sm text-zinc-400">Вопросы из easy + medium.</div>
             </button>
 
-            <button class="difficulty-btn bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl p-3 text-left" data-difficulty="hard">
-              <div class="text-lg font-semibold mb-1">Сложный</div>
+            <button class="difficulty-btn bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl p-5 text-left" data-difficulty="hard">
+              <div class="text-xl font-semibold mb-2">Сложный</div>
               <div class="text-sm text-zinc-400">Вопросы из medium + hard.</div>
             </button>
           </div>
@@ -66,45 +88,45 @@
       </section>
 
       <section id="quizScreen" class="hidden">
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-3">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-2">
           <div class="flex flex-wrap items-center gap-2 text-sm">
-            <div class="bg-zinc-800 border border-zinc-700 rounded-xl px-3 py-1.5">
+            <div class="bg-zinc-800 border border-zinc-700 rounded-xl px-3 py-1">
               Вопрос: <span id="questionNumber" class="font-semibold">1</span> / 10
             </div>
-            <div class="bg-zinc-800 border border-zinc-700 rounded-xl px-3 py-1.5">
+            <div class="bg-zinc-800 border border-zinc-700 rounded-xl px-3 py-1">
               Правильно: <span id="score" class="font-semibold text-emerald-400">0</span>
             </div>
-            <div class="bg-zinc-800 border border-zinc-700 rounded-xl px-3 py-1.5">
+            <div class="bg-zinc-800 border border-zinc-700 rounded-xl px-3 py-1">
               Сложность: <span id="difficultyLabel" class="font-semibold">Лёгкий</span>
             </div>
           </div>
 
-          <div class="w-full md:w-48">
+          <div class="w-full md:w-44">
             <div class="h-2 bg-zinc-800 rounded-full overflow-hidden">
               <div id="progressBar" class="h-full bg-violet-500 w-[10%] transition-all duration-300"></div>
             </div>
           </div>
         </div>
 
-        <div class="bg-zinc-800 border border-zinc-700 rounded-3xl p-2 md:p-3 mb-3">
+        <div class="bg-zinc-800 border border-zinc-700 rounded-3xl p-2 mb-2">
           <div class="w-full flex justify-center">
             <img
               id="paintingImage"
               src=""
               alt="Картина"
-              class="max-h-[36vh] md:max-h-[42vh] w-auto max-w-full rounded-2xl border border-zinc-700 object-contain bg-zinc-900"
+              class="max-h-[30vh] md:max-h-[34vh] w-auto max-w-full rounded-2xl border border-zinc-700 object-contain bg-zinc-900"
             >
           </div>
 
-          <div class="mt-2 flex flex-wrap gap-2">
-            <button id="nextBtn" class="hidden bg-zinc-700 hover:bg-zinc-600 text-white px-4 py-2.5 rounded-2xl font-medium text-sm md:text-base">
+          <div class="mt-1.5 flex flex-wrap gap-2">
+            <button id="nextBtn" class="hidden bg-zinc-700 hover:bg-zinc-600 text-white px-3 py-2 rounded-2xl font-medium text-sm">
               Следующий вопрос
             </button>
           </div>
         </div>
 
-        <div id="answersContainer" class="grid grid-cols-1 gap-2 mb-3"></div>
-        <div id="feedbackBox" class="hidden rounded-2xl border p-3 text-sm md:text-base"></div>
+        <div id="answersContainer" class="grid grid-cols-1 gap-1.5 mb-2"></div>
+        <div id="feedbackBox" class="hidden rounded-2xl border p-2.5 text-sm"></div>
       </section>
 
       <section id="resultScreen" class="hidden">
@@ -120,7 +142,7 @@
               Пройти ещё раз
             </button>
 
-            <a href="/" class="bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-white px-5 py-2.5 rounded-2xl font-medium">
+            <a href="../" class="bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-white px-5 py-2.5 rounded-2xl font-medium">
               К выбору раздела
             </a>
           </div>
@@ -129,7 +151,7 @@
     </main>
   </div>
 
-  <script src="/data/art-items.js"></script>
+  <script src="../data/art-items.js"></script>
   <script>
     const TEST_LENGTH = 10;
 
@@ -137,6 +159,8 @@
     const quizScreen = document.getElementById("quizScreen");
     const resultScreen = document.getElementById("resultScreen");
     const startError = document.getElementById("startError");
+    const pageHeader = document.getElementById("pageHeader");
+    const compactQuizTitle = document.getElementById("compactQuizTitle");
 
     const questionNumberEl = document.getElementById("questionNumber");
     const scoreEl = document.getElementById("score");
@@ -209,9 +233,9 @@
       feedbackBox.textContent = text;
 
       if (type === "correct") {
-        feedbackBox.className = "rounded-2xl border p-3 text-sm md:text-base bg-emerald-950 border-emerald-700 text-emerald-200";
+        feedbackBox.className = "rounded-2xl border p-2.5 text-sm bg-emerald-950 border-emerald-700 text-emerald-200";
       } else {
-        feedbackBox.className = "rounded-2xl border p-3 text-sm md:text-base bg-red-950 border-red-700 text-red-200";
+        feedbackBox.className = "rounded-2xl border p-2.5 text-sm bg-red-950 border-red-700 text-red-200";
       }
     }
 
@@ -296,7 +320,7 @@
         button.type = "button";
         button.textContent = answer.author;
         button.dataset.authorKey = answer.authorKey;
-        button.className = "answer-btn w-full text-left bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl px-3 py-2.5 text-sm md:text-base";
+        button.className = "answer-btn w-full text-left bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-2xl px-3 py-2 text-sm";
         button.addEventListener("click", () => handleAnswerClick(answer));
         answersContainer.appendChild(button);
       });
@@ -313,11 +337,11 @@
         const authorKey = button.dataset.authorKey;
 
         if (authorKey === currentQuestion.correctAuthorKey) {
-          button.className = "answer-btn w-full text-left bg-emerald-950 border border-emerald-600 rounded-2xl px-3 py-2.5 text-sm md:text-base";
+          button.className = "answer-btn w-full text-left bg-emerald-950 border border-emerald-600 rounded-2xl px-3 py-2 text-sm";
         } else if (authorKey === selectedAnswer.authorKey) {
-          button.className = "answer-btn w-full text-left bg-red-950 border border-red-600 rounded-2xl px-3 py-2.5 text-sm md:text-base";
+          button.className = "answer-btn w-full text-left bg-red-950 border border-red-600 rounded-2xl px-3 py-2 text-sm";
         } else {
-          button.className = "answer-btn w-full text-left bg-zinc-800 border border-zinc-700 rounded-2xl px-3 py-2.5 text-sm md:text-base opacity-70";
+          button.className = "answer-btn w-full text-left bg-zinc-800 border border-zinc-700 rounded-2xl px-3 py-2 text-sm opacity-70";
         }
       });
     }
@@ -331,7 +355,7 @@
       const correctItem = preparedQuestions[currentQuestionIndex];
       currentQuestion = createQuestion(correctItem);
 
-      paintingImage.src = "/" + currentQuestion.image;
+      paintingImage.src = "../" + currentQuestion.image;
       paintingImage.alt = currentQuestion.correctFullLabel;
 
       renderAnswers(currentQuestion);
@@ -358,6 +382,8 @@
         }
 
         preparedQuestions = buildTestSequence(questionPool, TEST_LENGTH);
+        pageHeader.classList.add("hidden");
+        compactQuizTitle.classList.remove("hidden");
         showScreen(quizScreen);
         loadQuestion();
       } catch (error) {
@@ -415,7 +441,12 @@
     });
 
     nextBtn.addEventListener("click", goToNextQuestion);
-    restartSameBtn.addEventListener("click", () => startTest(currentDifficulty));
+
+    restartSameBtn.addEventListener("click", () => {
+      pageHeader.classList.add("hidden");
+      compactQuizTitle.classList.remove("hidden");
+      startTest(currentDifficulty);
+    });
   </script>
 </body>
 </html>
